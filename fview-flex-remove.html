@@ -1,0 +1,30 @@
+<head>
+  <title>fview-flex-remove-bug</title>
+</head>
+
+<body style="background: grey">
+  {{> main}}
+</body>
+
+<template name="main">
+  {{#FlexScrollView layout="ListLayout" direction="Y" size="[undefined, undefined]" layoutOptions='{ "itemSize": true, "margins": [0, 0, 50, 0] }' nodeSpring='{ "dampingRatio": 0.6, "period": 1000 }' translate='[0, 0, 5]'}}
+    {{#famousEach items}}
+      {{#View id=this._id size='[undefined, 200]'}}
+		{{>Surface template="itemMoveUp" size='[true, true]' origin="[0, 0.5]" align="[0, 0.5]" translate='[10, 0, 1]' style="background: red"}}
+		{{>Surface template="itemRemove" size='[true, true]' origin="[1, 0.5]" align="[1, 0.5]" translate='[-60, 0, 1]' style="background: yellow"}}
+		{{#Surface size='[true, true]' origin="[0.5, 0.5]" align="[0.5, 0.5]" translate='[0, 0, 1]'}}{{name}}{{/Surface}}
+		{{#Surface size='[undefined, 180]' origin="[0, 0.5]" align="[0, 0.5]" style="background: green"}}{{/Surface}}
+      {{/View}}
+    {{/famousEach}}
+  {{/FlexScrollView}}
+</template>
+
+<template name="item"></template>
+
+<template name="itemRemove">
+	Remove
+</template>
+
+<template name="itemMoveUp">
+	Move Up
+</template>
