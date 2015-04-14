@@ -17,17 +17,32 @@ if (Meteor.isClient) {
       Items.remove({ _id: Blaze.getData(fview.parent.blazeView).id });
     }
   });
+
+  Template.reset.famousEvents({
+    'click': function (event, fview) {
+      Meteor.call('reset');
+    }
+  }); 
+
 }
 
 Items = new Mongo.Collection('items');
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
+  reset = function () {
     Items.remove({});
-    if (Items.find().count() < 4) {
-      for (var i = 0; i < 4; i++) {
-        Items.insert({ name: 'Surface #' + i, ranking: i});
-      }
+    for (var i = 0; i < 4; i++) {
+      Items.insert({ name: 'Surface #' + i, ranking: i});
+    }
+  };
+
+  Meteor.startup(function () {
+    reset();
+  });
+
+  Meteor.methods({
+    reset: function () {
+      reset();
     }
   });
 }
